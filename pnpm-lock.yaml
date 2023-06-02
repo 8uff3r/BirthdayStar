@@ -17,12 +17,6 @@ dependencies:
   '@grammyjs/stateless-question':
     specifier: ^3.0.1
     version: 3.0.1(grammy@1.16.1)
-  '@types/jalaali-js':
-    specifier: ^1.1.1
-    version: 1.1.1
-  '@types/node':
-    specifier: ^20.2.5
-    version: 20.2.5
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -35,17 +29,17 @@ dependencies:
   jalaali-js:
     specifier: ^1.2.6
     version: 1.2.6
-  shamsi:
-    specifier: ^1.1.6
-    version: 1.1.6
-  telegram-inline-calendar:
-    specifier: ^2.0.3
-    version: 2.0.3
   zero-fill:
     specifier: ^2.2.4
     version: 2.2.4
 
 devDependencies:
+  '@types/jalaali-js':
+    specifier: ^1.1.1
+    version: 1.1.1
+  '@types/node':
+    specifier: ^20.2.5
+    version: 20.2.5
   '@types/node-fetch':
     specifier: ^2.6.4
     version: 2.6.4
@@ -115,7 +109,7 @@ packages:
 
   /@types/jalaali-js@1.1.1:
     resolution: {integrity: sha512-WlNLd1NZ2PCC+PlCuIKo92gc+RhQxfQ7nbGTWZgV5YZG3h/DZxMOSBVZYtc3Vwqx5eMF24xiUirFP9ibCS9EYQ==}
-    dev: false
+    dev: true
 
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
@@ -126,6 +120,7 @@ packages:
 
   /@types/node@20.2.5:
     resolution: {integrity: sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==}
+    dev: true
 
   /abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -194,10 +189,6 @@ packages:
   /css-what@6.1.0:
     resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
     engines: {node: '>= 6'}
-    dev: false
-
-  /dayjs@1.11.7:
-    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
     dev: false
 
   /debug@4.3.4:
@@ -366,20 +357,9 @@ packages:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
 
-  /shamsi@1.1.6:
-    resolution: {integrity: sha512-lTXsWGlPxY+AdkcoCJdwy4cFlqeULk0uPEBx+Mh7QIYEyfc+oPRFiChoxDHU3t2F2sL5J8gDJ6moD5sunOrWpg==}
-    dev: false
-
   /telegram-format@2.1.0:
     resolution: {integrity: sha512-V2thkhKzcNVL26h/ANeat/Z+AXBaDGoizs4cab6Kpq/w+d+Ai6M/AFFkuBwvCkZXqb+7UW2vt3Dko5+kKcOIHg==}
     engines: {node: '>=12'}
-    dev: false
-
-  /telegram-inline-calendar@2.0.3:
-    resolution: {integrity: sha512-GlKQ+iTD/47zS4/ZWKXdjQ+GHQpBYmcZl1Wmhjs4OhnVvtWcAf0XCrXeZH4DKoUji//dk9TVjCU42x5c/9r3iQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      dayjs: 1.11.7
     dev: false
 
   /tr46@0.0.3:
