@@ -15,7 +15,7 @@ interface SessionData {
 }
 type MyContext = Context & ConversationFlavor & SessionFlavor<SessionData> & ParseModeFlavor<Context>;
 type MyConversation = Conversation<MyContext>;
-const bot = new Bot<MyContext>("6017005573:AAEez79V7yBPIf0mmyOwLNK-ECjmJ79kYRE"); // <-- put your bot token between the ""
+const bot = new Bot<MyContext>(process.env.TOKEN!); // <-- put your bot token between the ""
 
 bot.use(session({ initial: () => ({ func: 0, by: 0, bm: 0, bd: 0 }) }));
 
