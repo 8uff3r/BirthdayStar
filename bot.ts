@@ -1,6 +1,7 @@
 import { Conversation, ConversationFlavor, conversations, createConversation } from "@grammyjs/conversations";
 import { Menu, MenuRange } from "@grammyjs/menu";
 import { hydrateReply, parseMode, ParseModeFlavor } from "@grammyjs/parse-mode";
+import axios from "axios";
 import { Bot, BotError, Context, session, SessionFlavor } from "grammy";
 import jalaali from "jalaali-js";
 import { getBS } from "./GBS.js";
@@ -147,6 +148,16 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
     // For Birthday Star
     ctx.session.func = 1;
     await ctx.reply("سال تولدت رو انتخاب کن", { reply_markup: calYearMenu });
+  }).row()
+  .text("تصویر روز ناسا", async (ctx) => {
+    const res = await axios.get("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY");
+    await ctx.api.sendPhoto(ctx.chat?.id!, res.data.url, {
+      caption: `نام: ${res.data.title}
+<a href="${res.data.hdurl}">تصویر با وضوح بیشتر</a>`,
+      parse_mode: "HTML",
+    });
+    ctx.replyWithHTML(`توضیحات:
+${res.data.explanation}`);
   });
 
 bot.use(work);
@@ -154,9 +165,9 @@ bot.use(work);
 bot.command("start", async (ctx) => {
   try {
     await ctx.replyWithHTML(
-      `با این ربات میتونی ستاره ای که نورش هم‌سنته رو پیدا کنی و عکسی که تلسکوپ هابل توی روز تولدت گرفته رو ببینی ✨
+      `با این ربات میتونی ستاره ای که نورش هم‌سنته رو پیدا کنی و عکسی که تلسکوپ هابل توی روز تولدت گرفته و عکس روز ناسا رو ببینی ✨
 
-    از دکمه های زیر کاری که میخوای برات انجام بدم رو انتخاب کن 🤓`,
+با دکمه های زیر کاری که میخوای برات انجام بدم رو انتخاب کن 🤓`,
       { reply_markup: work },
     );
   } catch (error) {
