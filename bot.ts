@@ -52,22 +52,23 @@ const calYearMenu = new Menu<MyContext>("calYear", { onMenuOutdated: false }).dy
   }
 }).text("Cancel", (ctx) => ctx.deleteMessage());
 
-const calMonthMenu = new Menu<MyContext>("calMonth", { onMenuOutdated: false }).dynamic(async (ctx, range) => {
-  for (let i in months) {
-    const month = parseInt(i);
-    if (month % 5 == 4) {
-      range.submenu({ text: months[month] }, "calDay", (ctx) => {
-        ctx.session.bm = month + 1;
-        ctx.editMessageText("روز تولدت رو انتخاب کن");
-      }).row();
-    } else {
-      range.submenu({ text: months[month] }, "calDay", (ctx) => {
-        ctx.session.bm = month + 1;
-        ctx.editMessageText("روز تولدت رو انتخاب کن");
-      });
+const calMonthMenu = (menuOut: boolean) =>
+  new Menu<MyContext>("calMonth", { onMenuOutdated: menuOut }).dynamic(async (ctx, range) => {
+    for (let i in months) {
+      const month = parseInt(i);
+      if (month % 5 == 4) {
+        range.submenu({ text: months[month] }, "calDay", (ctx) => {
+          ctx.session.bm = month + 1;
+          ctx.editMessageText("روز تولدت رو انتخاب کن");
+        }).row();
+      } else {
+        range.submenu({ text: months[month] }, "calDay", (ctx) => {
+          ctx.session.bm = month + 1;
+          ctx.editMessageText("روز تولدت رو انتخاب کن");
+        });
+      }
     }
-  }
-});
+  });
 
 async function HBI(conversation: MyConversation, ctx: MyContext) {
   let [bys, bms, bds] = [ctx.session.by, ctx.session.bm, ctx.session.bd];
@@ -108,7 +109,7 @@ Gliese Catalog 3rd edition: ${val.gl}`);
 }
 bot.use(createConversation(BS));
 
-const calDayMenu = new Menu<MyContext>("calDay", { onMenuOutdated: false }).dynamic(async (ctx, range) => {
+const calDayMenu = new Menu<MyContext>("calDay").dynamic(async (ctx, range) => {
   const days = ctx.session.bm <= 6 ? 31 : 30;
   for (let i = 1; i <= days; i++) {
     if (i % 5 == 0) {
@@ -136,14 +137,14 @@ const calDayMenu = new Menu<MyContext>("calDay", { onMenuOutdated: false }).dyna
 });
 
 bot.use(calYearMenu);
-calYearMenu.register(calMonthMenu);
-calMonthMenu.register(calDayMenu);
+calYearMenu.register(calMonthMenu(true));
+calMonthMenu(true).register(calDayMenu);
 
 const work = new Menu<MyContext>("work", { onMenuOutdated: false })
   .text("عکس هابل", async (ctx) => {
     // For Hubble Image
     ctx.session.func = 0;
-    await ctx.reply("ماه تولدت رو انتخاب کن", { reply_markup: calMonthMenu });
+    await ctx.reply("ماه تولدت رو انتخاب کن", { reply_markup: calMonthMenu(false) });
   }).text("ستاره تولد", async (ctx) => {
     // For Birthday Star
     ctx.session.func = 1;
