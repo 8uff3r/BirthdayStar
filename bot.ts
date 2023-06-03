@@ -54,7 +54,7 @@ const calYearMenu = new Menu<MyContext>("calYear", { onMenuOutdated: false }).dy
 
 const calMonthMenu = new Menu<MyContext>("calMonth", {
   onMenuOutdated: async (ctx) => {
-    await ctx.answerCallbackQuery();
+    // await ctx.answerCallbackQuery();
     if (ctx.session.func == 1) {
       await ctx.reply("سال تولدت رو انتخاب کن", { reply_markup: calYearMenu });
     } else {
@@ -144,9 +144,9 @@ const calDayMenu = new Menu<MyContext>("calDay").dynamic(async (ctx, range) => {
   }
 });
 
-bot.use(calYearMenu);
 calYearMenu.register(calMonthMenu);
-calMonthMenu.register(calDayMenu);
+calYearMenu.register(calDayMenu);
+bot.use(calYearMenu);
 
 const work = new Menu<MyContext>("work", { onMenuOutdated: false })
   .text("عکس هابل", async (ctx) => {
