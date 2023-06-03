@@ -52,7 +52,16 @@ const calYearMenu = new Menu<MyContext>("calYear", { onMenuOutdated: false }).dy
   }
 }).text("Cancel", (ctx) => ctx.deleteMessage());
 
-const calMonthMenu = new Menu<MyContext>("calMonth", { onMenuOutdated: false }).dynamic(async (ctx, range) => {
+const calMonthMenu = new Menu<MyContext>("calMonth", {
+  onMenuOutdated: async (ctx) => {
+    await ctx.answerCallbackQuery();
+    if (ctx.session.func == 1) {
+      await ctx.reply("سال تولدت رو انتخاب کن", { reply_markup: calYearMenu });
+    } else {
+      await ctx.reply("ماه تولدت رو انتخاب کن", { reply_markup: calMonthMenu });
+    }
+  },
+}).dynamic(async (ctx, range) => {
   for (let i in months) {
     const month = parseInt(i);
     if (month % 5 == 4) {
@@ -108,7 +117,7 @@ Gliese Catalog 3rd edition: ${val.gl}`);
 }
 bot.use(createConversation(BS));
 
-const calDayMenu = new Menu<MyContext>("calDay", { onMenuOutdated: false }).dynamic(async (ctx, range) => {
+const calDayMenu = new Menu<MyContext>("calDay").dynamic(async (ctx, range) => {
   const days = ctx.session.bm <= 6 ? 31 : 30;
   for (let i = 1; i <= days; i++) {
     if (i % 5 == 0) {
