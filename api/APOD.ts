@@ -6,10 +6,9 @@ export const getApod = async () => {
   const $ = load(res.data, null, false);
   const Apod = {
     name: $("b").first().html()?.trim(),
-    desc: $("p").eq(2).html()?.trim(),
+    desc: $("p").eq(2).html()?.trim().replace("\n","") ,
     img: $("img").first().attr("src"),
   };
   return Apod;
 };
 
-console.log( (await getApod() ).desc?.trim().replace("\n","") )
