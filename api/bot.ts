@@ -175,7 +175,7 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
       parse_mode: "HTML",
     });
     ctx.replyWithHTML(`توضیحات:
-${apod.desc}`);
+${apod.desc?.trim()}`);
   });
 
 bot.use(work);
