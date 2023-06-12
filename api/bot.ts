@@ -2,6 +2,7 @@ import { Conversation, ConversationFlavor, conversations, createConversation } f
 import { Menu, MenuRange } from "@grammyjs/menu";
 import { hydrateReply, parseMode, ParseModeFlavor } from "@grammyjs/parse-mode";
 import axios from "axios";
+import express from "express";
 import { Bot, BotError, Context, session, SessionFlavor, webhookCallback } from "grammy";
 import jalaali from "jalaali-js";
 import { getApod } from "./APOD.js";
@@ -19,6 +20,15 @@ type MyContext = Context & ConversationFlavor & SessionFlavor<SessionData> & Par
 type MyConversation = Conversation<MyContext>;
 const bot = new Bot<MyContext>(process.env.TOKEN!); // <-- put your bot token between the ""
 
+bot.api
+  .setMyCommands([
+    { command: "start", description: "راه‌اندازی ربات" },
+    { command: "status", description: "Check bot status" },
+  ])
+  .then(() => {
+    console.log("commands have been uploaded to BotFather");
+  })
+  .catch((e) => console.error("Failed to upload commands to bot", e));
 bot.use(session({ initial: () => ({ func: 0, by: 0, bm: 0, bd: 0 }) }));
 
 bot.use(conversations());
@@ -186,8 +196,7 @@ bot.command("start", async (ctx) => {
 });
 bot.catch(errorHandler);
 // Start the bot.
-// bot.start();
-export default webhookCallback(bot, "http");
+bot.start();
 function errorHandler(err: BotError) {
   console.error("Error: ", err);
 }
