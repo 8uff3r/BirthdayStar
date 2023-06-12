@@ -2,8 +2,9 @@ import { Conversation, ConversationFlavor, conversations, createConversation } f
 import { Menu, MenuRange } from "@grammyjs/menu";
 import { hydrateReply, parseMode, ParseModeFlavor } from "@grammyjs/parse-mode";
 import axios from "axios";
-import { Bot, BotError, Context, session, SessionFlavor } from "grammy";
+import { Bot, BotError, Context, session, SessionFlavor, webhookCallback } from "grammy";
 import jalaali from "jalaali-js";
+import { getApod } from "./APOD.js";
 import { getBS } from "./GBS.js";
 import { getHBI } from "./HBS.js";
 import months from "./months.js";
@@ -159,14 +160,14 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
     await ctx.reply("سال تولدت رو انتخاب کن", { reply_markup: calYearMenu });
   }).row()
   .text("تصویر روز ناسا", async (ctx) => {
-    const res = await axios.get("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY");
-    await ctx.api.sendPhoto(ctx.chat?.id!, res.data.url, {
-      caption: `نام: ${res.data.title}
-<a href="${res.data.hdurl}">تصویر با وضوح بیشتر</a>`,
+    const apod = await getApod();
+    await ctx.api.sendPhoto(ctx.chat?.id!, apod.img!, {
+      caption: `نام: ${apod.name}
+<a href="https://apod.nasa.gov/apod/${apod.img}">تصویر با وضوح بیشتر</a>`,
       parse_mode: "HTML",
     });
     ctx.replyWithHTML(`توضیحات:
-${res.data.explanation}`);
+${apod.desc}`);
   });
 
 bot.use(work);
@@ -185,7 +186,8 @@ bot.command("start", async (ctx) => {
 });
 bot.catch(errorHandler);
 // Start the bot.
-bot.start();
+// bot.start();
+export default webhookCallback(bot, "http");
 function errorHandler(err: BotError) {
   console.error("Error: ", err);
 }

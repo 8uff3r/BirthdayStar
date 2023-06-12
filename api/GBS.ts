@@ -20,11 +20,6 @@ export const getBS = async ([by, bm, bd]: number[]) => {
   // const buffer = readFileSync("/home/rylan/file.html");
   // const $ = load(buffer, null, false);
   const $ = load(res.data, null, false);
-  const star = {
-    name: $(".trrestitle").children(":nth-child(1)"),
-    constellation: $(".tdresconstodd,.tdresconsteven"),
-    dist: $(".tdresrightodd, .tdresrighteven"),
-  };
   let stars = [
     {
       name: "",
