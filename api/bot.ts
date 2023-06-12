@@ -169,7 +169,7 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
   }).row()
   .text("تصویر روز ناسا", async (ctx) => {
     const apod = await getApod();
-    await ctx.api.sendPhoto(ctx.chat?.id!, apod.img!, {
+    await ctx.api.sendPhoto(ctx.chat?.id!, `https://apod.nasa.gov/apod/${apod.img}`, {
       caption: `نام: ${apod.name}
 <a href="https://apod.nasa.gov/apod/${apod.img}">تصویر با وضوح بیشتر</a>`,
       parse_mode: "HTML",
