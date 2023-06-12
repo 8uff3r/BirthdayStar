@@ -3,10 +3,11 @@ import { Menu, MenuRange } from "@grammyjs/menu";
 import { hydrateReply, parseMode, ParseModeFlavor } from "@grammyjs/parse-mode";
 import { Bot, BotError, Context, session, SessionFlavor, webhookCallback } from "grammy";
 import jalaali from "jalaali-js";
-import { getApod } from "./APOD.js";
-import { getBS } from "./GBS.js";
-import { getHBI } from "./HBS.js";
-import months from "./months.js";
+import months from "./data/months.js";
+import { getApod } from "./getters/APOD.js";
+import { getBS } from "./getters/GBS.js";
+import { getHBI } from "./getters/HBS.js";
+import { getMRI } from "./getters/MRI.js";
 
 interface SessionData {
   func: number;
@@ -176,7 +177,15 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
     });
     ctx.replyWithHTML(`توضیحات:
 ${apod.desc?.trim()}`);
-  });
+  }).text(
+    "عکس از کنجکاوی",
+    async (ctx) => {
+      const mri = await getMRI();
+      await ctx.api.sendPhoto(ctx.chat?.id!, mri, {
+        caption: "عکسی از مریخ‌نورد Curiosity",
+      });
+    },
+  );
 
 bot.use(work);
 
