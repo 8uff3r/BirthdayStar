@@ -1,8 +1,6 @@
 import { Conversation, ConversationFlavor, conversations, createConversation } from "@grammyjs/conversations";
 import { Menu, MenuRange } from "@grammyjs/menu";
 import { hydrateReply, parseMode, ParseModeFlavor } from "@grammyjs/parse-mode";
-import axios from "axios";
-import express from "express";
 import { Bot, BotError, Context, session, SessionFlavor, webhookCallback } from "grammy";
 import jalaali from "jalaali-js";
 import { getApod } from "./APOD.js";
