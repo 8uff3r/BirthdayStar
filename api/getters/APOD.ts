@@ -12,5 +12,3 @@ export const getApod = async () => {
   };
   return Apod;
 };
-
-getApod().then(console.log);
