@@ -176,8 +176,6 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
 <a href="https://apod.nasa.gov/apod/${apod.img}">تصویر با وضوح بیشتر</a>`,
         parse_mode: "HTML",
       });
-      ctx.replyWithHTML(`توضیحات:
-${apod.desc?.trim()}`);
     } else {
       await ctx.reply(apod.vid || "Error");
     }
