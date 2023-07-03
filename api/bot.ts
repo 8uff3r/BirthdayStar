@@ -95,9 +95,9 @@ async function HBI(conversation: MyConversation, ctx: MyContext) {
   const imageCap = `نام: ${hbi.title} 
 سال مشاهده: ${hbi.year} 
 توضیحات:
-${hbi.description} 
+${hbi.desc} 
 <a href="${hbi.info}">اطلاعات بیشتر</a>`;
-  await ctx.api.sendPhoto(ctx.chat?.id!, hbi.imageURL, {
+  await ctx.api.sendPhoto(ctx.chat?.id!, hbi.img, {
     caption: imageCap,
     parse_mode: "HTML",
   });
