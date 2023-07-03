@@ -181,15 +181,16 @@ const work = new Menu<MyContext>("work", { onMenuOutdated: false })
     }
     ctx.replyWithHTML(`توضیحات:
 ${apod.desc?.trim()}`);
-  }).text(
-    "عکس از کنجکاوی",
-    async (ctx) => {
-      const mri = await getMRI();
-      await ctx.api.sendPhoto(ctx.chat?.id!, mri, {
-        caption: "عکسی از مریخ‌نورد Curiosity",
-      });
-    },
-  );
+  });
+// .text(
+//     "عکس از کنجکاوی",
+//     async (ctx) => {
+//       const mri = await getMRI();
+//       await ctx.api.sendPhoto(ctx.chat?.id!, mri, {
+//         caption: "عکسی از مریخ‌نورد Curiosity",
+//       });
+//     },
+//   );
 
 bot.use(work);
 
