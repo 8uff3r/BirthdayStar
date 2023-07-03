@@ -15,6 +15,7 @@
     "axios": "^1.4.0",
     "cheerio": "1.0.0-rc.12",
     "express": "^4.18.2",
+    "got": "^13.0.0",
     "grammy": "^1.16.1",
     "jalaali-js": "^1.2.6",
     "zero-fill": "^2.2.4"
