@@ -1,13 +1,14 @@
+import { autoRetry } from "@grammyjs/auto-retry";
 import { Conversation, ConversationFlavor, conversations, createConversation } from "@grammyjs/conversations";
 import { Menu, MenuRange } from "@grammyjs/menu";
 import { hydrateReply, parseMode, ParseModeFlavor } from "@grammyjs/parse-mode";
 import { Bot, BotError, Context, session, SessionFlavor, webhookCallback } from "grammy";
+import { ignoreOld } from "grammy-middlewares";
 import jalaali from "jalaali-js";
 import months from "./data/months.js";
 import { getApod } from "./getters/APOD.js";
 import { getBS } from "./getters/GBS.js";
 import { getHBI } from "./getters/HBS.js";
-import { getMRI } from "./getters/MRI.js";
 
 interface SessionData {
   func: number;
@@ -19,6 +20,7 @@ type MyContext = Context & ConversationFlavor & SessionFlavor<SessionData> & Par
 type MyConversation = Conversation<MyContext>;
 const bot = new Bot<MyContext>(process.env.TOKEN!); // <-- put your bot token between the ""
 
+bot.api.config.use(autoRetry());
 bot.api
   .setMyCommands([
     { command: "start", description: "راه‌اندازی ربات" },
@@ -33,6 +35,7 @@ bot.use(session({ initial: () => ({ func: 0, by: 0, bm: 0, bd: 0 }) }));
 bot.use(conversations());
 // Install the plugin.
 bot.use(hydrateReply);
+bot.use(ignoreOld());
 
 const calYearMenu = new Menu<MyContext>("calYear", { onMenuOutdated: false }).dynamic(async (ctx, range) => {
   for (let i = 1350; i < 1400; i++) {
