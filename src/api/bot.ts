@@ -65,7 +65,6 @@ export function runBot(bot: Bot<MyContext, Api<RawApi>>) {
 							},
 							"calMonth",
 							(ctx) => {
-								console.log("calMonth", ctx.session);
 								ctx.session.by = i;
 								ctx.editMessageText("ماه تولدت رو انتخاب کن");
 							},
@@ -123,7 +122,6 @@ export function runBot(bot: Bot<MyContext, Api<RawApi>>) {
 		if (!ctx.chat) return;
 		const session = await conversation.external((ctx) => ctx.session);
 
-		console.log("HBI", session);
 		const [bys, bms, bds] = [session.by, session.bm, session.bd];
 		const { gm: bm, gd: bd } = jalaali.toGregorian(bys, bms, bds);
 		const hbi = getHBI(bm, bd);
@@ -239,16 +237,12 @@ ${apod.desc?.trim()}`);
 	bot.use(work);
 
 	bot.command("start", async (ctx) => {
-		try {
-			await ctx.replyWithHTML(
-				`با این ربات میتونی ستاره ای که نورش همسنته رو پیدا کنی و عکسی که تلسکوپ هابل توی روز تولدت گرفته و عکس روز ناسا رو ببینی ✨
+		await ctx.replyWithHTML(
+			`با این ربات میتونی ستاره ای که نورش همسنته رو پیدا کنی و عکسی که تلسکوپ هابل توی روز تولدت گرفته و عکس روز ناسا رو ببینی ✨
 
 با دکمه های زیر کاری که میخوای برات انجام بدم رو انتخاب کن 🤓`,
-				{ reply_markup: work },
-			);
-		} catch (error) {
-			bot.start();
-		}
+			{ reply_markup: work },
+		);
 	});
 	bot.catch(errorHandler);
 }
